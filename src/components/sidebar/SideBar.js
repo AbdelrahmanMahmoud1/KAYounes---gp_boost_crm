@@ -20,7 +20,7 @@ const SideBar = () => {
         {isOpen && <img src={logo} alt="logo" className="icon" />}
         {isOpen && (
           <Link to="/Home" className="logo_name">
-            BOOST CRM
+            ElZOBOON
           </Link>
         )}
         {isOpen && (

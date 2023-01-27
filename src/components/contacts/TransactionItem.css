@@ -29,6 +29,10 @@
 }
 .total {
 }
+.invoice-date {
+  width: 10rem;
+  height: 6rem;
+}
 
 .invoice-date {
   display: flex;

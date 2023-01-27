@@ -16,11 +16,11 @@ const ContactForm = (props) => {
 
   const isAdding = useSelector((state) => state.isAdding);
   const isPreviewing = useSelector((state) => state.isPreviewing);
+  const baseURL = useSelector((state) => state.baseURL);
 
   const addContactHandler = (Contact) => {
     dispatch({ type: "addContact", newContact: Contact });
     console.log("From Contact Handler");
-    console.log(Contact);
   };
   const {
     reset,
@@ -37,10 +37,17 @@ const ContactForm = (props) => {
 
   const submitHandler = (data) => {
     const ContactData = {
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       segementType: "Spender",
       ...data,
     };
+
+    // fetch(`${baseURL}adduser`, {
+    //   method: "post",
+    //   body: JSON.stringify(ContactData),
+    //   headers: { "Content-Type": "application/json" },
+    // });
+
     addContactHandler(ContactData);
     reset();
   };
@@ -78,7 +85,9 @@ const ContactForm = (props) => {
             </div> */}
             <Card className="new-contact__controls">
               <div className="new-contact__control">
-                <label for="type">Type</label>
+                <label className="required" for="type">
+                  Type
+                </label>
                 <select id="type" {...register("type", { required: true })}>
                   <option value="Lead">Lead</option>
                   <option value="Client">Client</option>
@@ -93,7 +102,6 @@ const ContactForm = (props) => {
                   type="number"
                   placeholder="Lead Score"
                   {...register("leadScore", {
-                    required: true,
                     min: {
                       value: 0,
                       message: "A score can't be a negative value",
@@ -108,28 +116,44 @@ const ContactForm = (props) => {
               </div>
 
               <div className="new-contact__control">
-                <label for="title">Title</label>
+                <label className="required" for="title">
+                  Title
+                </label>
                 <input
+                  className={errors?.title ? "error" : " "}
                   id="title"
                   type="text"
                   placeholder="Title"
-                  {...register("title", { required: true, maxLength: 150 })}
+                  {...register("title", {
+                    required: "Title is required",
+                    maxLength: 150,
+                  })}
                 />
+                {errors?.title?.message && <p>{errors?.title?.message}</p>}
               </div>
 
               <div className="new-contact__control">
-                <label for="company">Company</label>
+                <label className="required" for="company">
+                  Company
+                </label>
                 <input
+                  className={errors?.company ? "error" : " "}
                   id="company"
                   type="text"
                   placeholder="Company"
-                  {...register("company", { required: true, maxLength: 150 })}
+                  {...register("company", {
+                    required: "Company is required",
+                    maxLength: 150,
+                  })}
                 />
+                {errors?.company?.message && <p>{errors?.company?.message}</p>}
               </div>
             </Card>
             <Card className="new-contact__controls">
               <div className="new-contact__control">
-                <label for="firstName">First Name</label>
+                <label className="required" for="firstName">
+                  First Name
+                </label>
                 <input
                   className={errors?.firstName?.message ? "error" : " "}
                   id="firstName"
@@ -144,7 +168,9 @@ const ContactForm = (props) => {
               </div>
 
               <div className="new-contact__control">
-                <label for="middleName">Middle Name</label>
+                <label className="required" for="middleName">
+                  Middle Name
+                </label>
                 <input
                   className={errors?.middleName?.message ? "error" : " "}
                   id="middleName"
@@ -159,7 +185,9 @@ const ContactForm = (props) => {
               </div>
 
               <div className="new-contact__control">
-                <label for="lastName">Last Name</label>
+                <label className="required" for="lastName">
+                  Last Name
+                </label>
                 <input
                   className={errors?.lastName?.message ? "error" : " "}
                   id="lastName"
@@ -175,7 +203,7 @@ const ContactForm = (props) => {
 
               <div className="new-contact__control">
                 <label for="prfeix">Prefix</label>
-                <select id="prefix" {...register("prefix", { required: true })}>
+                <select id="prefix" {...register("prefix")}>
                   <option value="Mr">Mr</option>
                   <option value="Mrs">Mrs</option>
                   <option value="Miss">Miss</option>
@@ -184,7 +212,9 @@ const ContactForm = (props) => {
               </div>
 
               <div className="new-contact__control">
-                <label for="age">Age</label>
+                <label className="required" for="age">
+                  Age
+                </label>
                 <input
                   className={errors?.age ? "error" : " "}
                   id="age"
@@ -206,7 +236,9 @@ const ContactForm = (props) => {
               </div>
 
               <div className="new-contact__control">
-                <label for="gender">Gender</label>
+                <label className="required" for="gender">
+                  Gender
+                </label>
                 <select id="gender" {...register("gender", { required: true })}>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -215,32 +247,41 @@ const ContactForm = (props) => {
             </Card>
             <Card className="new-contact__controls">
               <div className="new-contact__control">
-                <label for="email">Email</label>
+                <label className="required" for="email">
+                  Email
+                </label>
                 <input
+                  className={errors?.email ? "error" : " "}
                   id="email"
                   type="text"
                   placeholder="Email"
                   {...register("email", {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Email is not valid",
+                    },
                   })}
                 />
+                <p>{errors?.email?.message}</p>
               </div>
-
               <div className="new-contact__control">
                 <label for="emailTag">Tag</label>
                 <input
                   id="emailTag"
                   type="text"
                   placeholder="Tag"
-                  {...register("emailTag", { required: true, maxLength: 100 })}
+                  {...register("emailTag", { maxLength: 100 })}
                 />
               </div>
             </Card>
             <Card className="new-contact__controls">
               <div className="new-contact__control">
-                <label for="phone">Phone</label>
+                <label className="required" for="phone">
+                  Phone
+                </label>
                 <input
+                  className={errors?.phone ? "error" : " "}
                   id="phone"
                   type="number"
                   placeholder="Phone"
@@ -250,6 +291,7 @@ const ContactForm = (props) => {
                     maxLength: 12,
                   })}
                 />
+                {errors?.phone?.type === "required" && <p>Phone is required</p>}
               </div>
 
               <div className="new-contact__control">
@@ -258,29 +300,43 @@ const ContactForm = (props) => {
                   id="phoneTag"
                   type="text"
                   placeholder="Tag"
-                  {...register("phoneTag", { required: true, maxLength: 100 })}
+                  {...register("phoneTag", { maxLength: 100 })}
                 />
               </div>
             </Card>
             <Card className="new-contact__controls">
               <div className="new-contact__control">
-                <label for="country">Country</label>
+                <label className="required" for="country">
+                  Country
+                </label>
                 <input
+                  className={errors?.country ? "error" : " "}
                   id="country"
                   type="text"
                   placeholder="Country"
-                  {...register("country", { required: true, maxLength: 100 })}
+                  {...register("country", {
+                    required: "Country is required",
+                    maxLength: 100,
+                  })}
                 />
+                {errors?.country?.message && <p>{errors?.country?.message}</p>}
               </div>
 
               <div className="new-contact__control">
-                <label for="city">City</label>
+                <label className="required" for="city">
+                  City
+                </label>
                 <input
+                  className={errors?.city ? "error" : " "}
                   id="city"
                   type="text"
                   placeholder="City"
-                  {...register("city", { required: true, maxLength: 100 })}
+                  {...register("city", {
+                    required: "City is required",
+                    maxLength: 100,
+                  })}
                 />
+                {errors?.city?.message && <p>{errors?.city?.message}</p>}
               </div>
 
               <div className="new-contact__control">
@@ -289,7 +345,7 @@ const ContactForm = (props) => {
                   id="arge"
                   type="text"
                   placeholder="Area"
-                  {...register("area", { required: true, maxLength: 100 })}
+                  {...register("area", { maxLength: 100 })}
                 />
               </div>
 
@@ -300,7 +356,6 @@ const ContactForm = (props) => {
                   type="text"
                   placeholder="Tag"
                   {...register("locationTag", {
-                    required: true,
                     maxLength: 100,
                   })}
                 />

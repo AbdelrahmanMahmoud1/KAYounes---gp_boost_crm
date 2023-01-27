@@ -38,6 +38,16 @@
   padding: 1rem;
   margin: 1rem auto;
 }
+.selectedFilters {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  gap: 1rem;
+  margin: 1rem auto;
+}
+.selectedFilters div {
+  padding: 0.5rem;
+}
 .search-bar {
   width: 50%;
   margin: auto;

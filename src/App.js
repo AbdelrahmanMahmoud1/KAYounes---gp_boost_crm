@@ -3,14 +3,26 @@ import SideBar from "./components/sidebar/SideBar";
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 const App = () => {
-  // fetch("https://e8db-196-221-94-249.eu.ngrok.io/api/getlabels/")
-  //   .then(function (response) {
-  //     return response.json();
-  //   })
-  //   .then(function (data) {
+  // const dispatch = useDispatch();
+
+  // async function fetchBaseURL() {
+  //   try {
+  //     const response = await fetch("http://backendelzoboon.hopto.org/");
+  //     const data = await response.json();
   //     console.log(data);
-  //   });
+  //     dispatch({ type: "setBaseURL", baseURL: `${data.ip}:8000/api/` });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchBaseURL();
+  // });
 
   return (
     <div>

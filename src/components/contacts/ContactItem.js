@@ -86,14 +86,11 @@ const ContactItem = (props) => {
 
   const contactImage = (
     <img
-      src={`https://api.multiavatar.com/${fullName}${props?.title}.png?random=1SJEItzLKpAGnW`}
+      src={`https://api.multiavatar.com/${props.firstName}}.png?random=1SJEItzLKpAGnW`}
       alt="Contact"
     />
   );
 
-  // const ContactImage = <img src={contactImage} alt="Contact" />;
-
-  // console.log(props?.id);
   return (
     <Card
       clickHandler={onClickHandler}
@@ -104,10 +101,7 @@ const ContactItem = (props) => {
     >
       <div className="contact-data">
         <div className="personal-data">
-          <div className="contact-image">
-            {/* <img src={contactImage} alt="Contact" /> */}
-            {contactImage}
-          </div>
+          <div className="contact-image">{contactImage}</div>
           <div className="contact-description">
             {props?.prefix && (
               <div className="contact-name">
@@ -124,6 +118,7 @@ const ContactItem = (props) => {
           </div>
         </div>
         <div className="purchase-details">
+          {!props?.recency && <div className="message">No Purchase Data</div>}
           {props?.recency && (
             <div>
               <strong>last purchase</strong>: {props?.recency} days ago
@@ -151,6 +146,10 @@ const ContactItem = (props) => {
           <div className={"segementType " + findSegementClass(segementType)}>
             {segementType}
           </div>
+        )}
+
+        {!segementType && (
+          <div className="segmentType unlabeled"> UnLabeld</div>
         )}
       </div>
     </Card>

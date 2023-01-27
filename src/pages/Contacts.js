@@ -11,7 +11,9 @@ import { Routes, Route } from "react-router-dom";
 import MultiSelect from "../UI/MultiSelect";
 
 const Contacts = () => {
+  fetch("http://backendelzoboon.hopto.org/");
   const isEditing = useSelector((state) => state.isEditing);
+  const filterQuery = useSelector((state) => state.filterQuery);
 
   const dispatch = useDispatch();
 
@@ -19,6 +21,7 @@ const Contacts = () => {
     dispatch({ type: "enableEditing" });
     dispatch({ type: "setCurrentContactID", contactID: null });
     dispatch({ type: "addingContact" });
+    dispatch({ type: "setBaseURL" });
   };
   // const ContactView =  ({isEditing && <ContactForm />} | {!isEditing && <NoContacts />})
   // const [contacts, setContacts] = useState(DUMMY_Contacts);
@@ -48,6 +51,26 @@ const Contacts = () => {
 
           <MultiSelect name="Select Filter" selectItems={selectItems} />
         </Card>
+        <div className="selectedFilters">
+          {filterQuery.item0 > 0 && (
+            <div className="segementType punctualCustomers">
+              Punctual Customers
+            </div>
+          )}
+          {filterQuery.item1 > 0 && (
+            <div className="segementType hibernatingCustomers">
+              Hibernating Customers
+            </div>
+          )}
+          {filterQuery.item2 > 0 && (
+            <div className="segementType exceptionalCustomers">
+              Exceptional Customers
+            </div>
+          )}
+          {filterQuery.item3 > 0 && (
+            <div className="segementType recentCustomers">Recent Customers</div>
+          )}
+        </div>
         <ContactsList />
       </div>
 

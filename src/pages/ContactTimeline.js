@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ContactTimeline.css";
 import Card from "../UI/Card";
 import TransactionItem from "../components/contacts/TransactionItem";
+import { useSelector } from "react-redux";
 
 const dummy_details = [
   {
@@ -198,11 +199,14 @@ const dummy_details = [
   },
 ];
 
-const url = "https://wwp6c.localtonet.com/api/getlabels/";
-
 const ContactTimeline = () => {
-  const [contactTransactions, setContactTransactions] = useState(dummy_details);
-  // const [contactTransactions, setContactTransactions] = useState([]);
+  const baseURL = useSelector((state) => state.baseURL);
+  const currentContactID = useSelector((state) => state.currentContactID);
+
+  let timelineURL = `${baseURL}getmldata/${currentContactID}`;
+
+  // const [contactTransactions, setContactTransactions] = useState(dummy_details);
+  const [contactTransactions, setContactTransactions] = useState([]);
 
   async function fetchContactTransactions(url) {
     try {
@@ -215,8 +219,8 @@ const ContactTimeline = () => {
   }
 
   useEffect(() => {
-    fetchContactTransactions(url);
-  }, []);
+    fetchContactTransactions(timelineURL);
+  }, [timelineURL]);
 
   const transacitonItems = contactTransactions.map((transaction) => (
     <TransactionItem
