@@ -14,7 +14,7 @@ let contactsReducer = (
       item2: 0,
       item3: 0,
     },
-    baseURL: `http://197.167.62.7:8000/api/`,
+    baseURL: `http://45.241.172.171:8000/api/`,
   },
   action
 ) => {

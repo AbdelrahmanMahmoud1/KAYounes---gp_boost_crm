@@ -2,6 +2,7 @@ import "./App.css";
 import SideBar from "./components/sidebar/SideBar";
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";
+import Reports from "./pages/Reports";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -24,6 +25,10 @@ const App = () => {
   //   fetchBaseURL();
   // });
 
+ 
+
+
+
   return (
     <div>
       <SideBar />
@@ -32,6 +37,7 @@ const App = () => {
           <Route path="/" element={<Navigate replace to="/Home" />} />
           <Route path="/Home" element={<Home />}></Route>
           <Route path="/contacts" element={<Contacts />}></Route>
+          <Route path="/Reports" element={<Reports />}></Route>
         </Routes>
       </div>
     </div>
